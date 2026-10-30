@@ -16,22 +16,23 @@ class UserService{
     }
     async getAllUsers(){
         const user=await User.find({isActive:true})
-        // .populate('profile')
-        const userIds=user.map((user)=>user._id)
-        const userProfiles=await UserProfile.find({
-            user:{$in:userIds},
-        })
+        .populate('profile')
+        // const userIds=user.map((user)=>user._id)
+        // const userProfiles=await UserProfile.find({
+        //     user:{$in:userIds},
+        // })
 
-        const userWithprofiles=user.map((user)=>{
-            const profile=userProfiles.find(
-                (profile)=>profile.user.toString()===user._id.toString()
-            )
-            return{
-                ...user.toObject(),
-                profile:profile||null,
-            }
-        })
-        return userWithprofiles
+        // const userWithprofiles=user.map((user)=>{
+        //     const profile=userProfiles.find(
+        //         (profile)=>profile.user.toString()===user._id.toString()
+        //     )
+        //     return{
+        //         ...user.toObject(),
+        //         profile:profile||null,
+        //     }
+        // })
+        // return userWithprofiles
+        return user
     }
     async softDeleteUser(id){
         const user=await User.findById(id)
